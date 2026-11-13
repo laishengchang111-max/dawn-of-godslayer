@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《弑神黎明》Dawn of Godslayer</title>
+<style>
+  :root{
+    --bg:#0a0a0c; --panel:#111116; --line:#23232b;
+    --gold:#c9a227; --gold-soft:#e2c76a; --ink:#e8e6e1; --dim:#8d8b86;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    line-height:1.8; -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,162,39,.10), transparent 70%);
+    background-repeat:no-repeat;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- 头图 ---------- */
+  header{padding:96px 0 72px;text-align:center;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12px;letter-spacing:.42em;color:var(--gold);text-transform:uppercase;margin-bottom:22px}
+  h1{font-size:clamp(38px,7vw,68px);margin:0;font-weight:800;letter-spacing:.06em;
+     background:linear-gradient(180deg,#fff 10%,var(--gold-soft) 60%,#8a6f1c 100%);
+     -webkit-background-clip:text;background-clip:text;color:transparent}
+  .en{margin:14px 0 0;font-size:15px;letter-spacing:.34em;color:var(--dim);text-transform:uppercase}
+  .meta{margin-top:34px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .tag{font-size:12px;letter-spacing:.14em;color:var(--gold-soft);
+       border:1px solid rgba(201,162,39,.35);border-radius:999px;padding:5px 15px;
+       background:rgba(201,162,39,.05)}
+
+  /* ---------- 通用块 ---------- */
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:13px;letter-spacing:.34em;color:var(--gold);margin:0 0 10px;font-weight:600}
+  .title{font-size:clamp(24px,3.4vw,32px);margin:0 0 32px;font-weight:700;letter-spacing:.04em}
+  .lead{color:#b8b6b0;font-size:16px}
+
+  /* ---------- 影片 ---------- */
+  .player{
+    background:#000;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+    box-shadow:0 30px 80px -40px rgba(201,162,39,.35);
+  }
+  video{display:block;width:100%;height:auto;background:#000}
+  .dl{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    font-size:13.5px;letter-spacing:.06em;padding:11px 20px;border-radius:2px;
+    border:1px solid rgba(201,162,39,.45);color:var(--gold-soft);
+    background:rgba(201,162,39,.06);transition:.2s;
+  }
+  .btn:hover{background:rgba(201,162,39,.16);border-color:var(--gold);color:#fff}
+  .btn.ghost{border-color:var(--line);color:var(--dim);background:transparent}
+  .btn.ghost:hover{border-color:#3a3a44;color:var(--ink)}
+  .note{margin-top:16px;font-size:12.5px;color:#6a6864;letter-spacing:.02em}
+
+  /* ---------- 说明 ---------- */
+  .doc{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--gold);
+       padding:34px 38px;border-radius:2px}
+  .doc p{margin:0 0 20px;color:#cfcdc7;font-size:15.5px}
+  .doc p:last-child{margin-bottom:0}
+  .doc .k{color:var(--gold-soft);font-weight:700;letter-spacing:.06em}
+  .doc .seal{margin-top:26px;padding-top:22px;border-top:1px solid #26262e;
+             color:#dcd9d2;font-size:15px;letter-spacing:.03em}
+
+  /* ---------- 剧本 ---------- */
+  details{background:var(--panel);border:1px solid var(--line);border-radius:2px}
+  summary{cursor:pointer;padding:20px 26px;font-size:15px;color:var(--gold-soft);
+          letter-spacing:.08em;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"展开 ▾";font-size:12px;color:var(--dim);letter-spacing:.1em}
+  details[open] summary::after{content:"收起 ▴"}
+  details[open] summary{border-bottom:1px solid var(--line)}
+  pre{
+    margin:0;padding:28px;max-height:620px;overflow:auto;
+    font-family:"Cascadia Mono","Consolas","Menlo",monospace;
+    font-size:12.5px;line-height:1.85;color:#a9a7a2;white-space:pre-wrap;word-break:break-word;
+  }
+
+  /* ---------- 资产图 ---------- */
+  .group{margin-bottom:52px}
+  .group:last-child{margin-bottom:0}
+  .gname{font-size:12px;letter-spacing:.3em;color:var(--dim);margin-bottom:18px;
+         padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:18px}
+  .card{
+    display:block;text-decoration:none;background:var(--panel);
+    border:1px solid var(--line);border-radius:2px;overflow:hidden;transition:.22s;
+  }
+  .card:hover{border-color:rgba(201,162,39,.55);transform:translateY(-3px);
+              box-shadow:0 20px 46px -26px rgba(201,162,39,.5)}
+  .card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:saturate(.96)}
+  .card span{display:block;padding:12px 14px;font-size:12.5px;color:#a8a6a1;letter-spacing:.03em}
+
+  footer{padding:56px 0 76px;text-align:center;color:#5c5a56;font-size:12px;letter-spacing:.14em}
+  @media(max-width:640px){
+    header{padding:64px 0 48px}
+    section{padding:52px 0}
+    .doc{padding:24px 22px}
+    pre{padding:18px;font-size:11.5px}
+    .wrap{padding:0 18px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">AI 漫剧短片</div>
+    <h1>弑神黎明</h1>
+    <p class="en">Dawn of Godslayer</p>
+    <div class="meta">
+      <span class="tag">4K · 3840×2160</span>
+      <span class="tag">60 FPS</span>
+      <span class="tag">16:9</span>
+      <span class="tag">末世 · 神圣审判</span>
+    </div>
+  </div>
+</header>
+
+<section id="film">
+  <div class="wrap">
+    <h2>FILM</h2>
+    <p class="title">正片</p>
+    <div class="player">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="影片/弑神黎明_1080p.mp4" type="video/mp4">
+        你的浏览器不支持 HTML5 视频播放。
+      </video>
+    </div>
+    <div class="dl">
+      <a class="btn" href="影片/弑神黎明_1080p.mp4" download>下载 1080p · 网页版</a>
+      <a class="btn ghost" href="影片/弑神黎明_4K原片.mp4" download>下载 4K 原片 · 294 MB</a>
+    </div>
+    <p class="note">网页内播放为 1080p 转码版；4K 原片保留完整画质与帧率，建议下载后本地观看。</p>
+  </div>
+</section>
+
+<section id="statement">
+  <div class="wrap">
+    <h2>STATEMENT</h2>
+    <p class="title">创作说明</p>
+    <div class="doc">
+      <p>《弑神黎明》是一部 55.5 秒的 AI 漫剧短片，题材为近未来末世与西方神圣审判。</p>
+      <p><span class="k">AI 工具</span>：Gemini 和 DeepSeek 等大语言模型辅助剧本与分镜；AI 图像工具生成人物、场景、道具三族资产板；Seedance 2.5 和 Muse 生成视频；Breeze-TTS-2 合成配音；剪映完成剪辑与声音。</p>
+      <p><span class="k">创作流程</span>：先定世界观与剧本，再拆出角色、场景、道具资产图逐张锁定形制；按机位连续性将全片分为七段，逐段撰写含参考图职责、运镜与禁止项的提示词；分段串行生成，以上段末帧接力保证一致；最后抽帧审片修正，完成配音、音效、字幕与调色。</p>
+      <div class="seal">剧本、分镜、提示词、生成、剪辑、配音、审片全部由本人独立完成。</div>
+    </div>
+  </div>
+</section>
+
+<section id="script">
+  <div class="wrap">
+    <h2>SCREENPLAY</h2>
+    <p class="title">剧本</p>
+    <details>
+      <summary>《弑神黎明》分场剧本 · 全文（55.5 秒 / 7 段一镜到底）</summary>
+      <pre id="scriptBody">加载中……</pre>
+    </details>
+    <div class="dl">
+      <a class="btn ghost" href="剧本.md" download>下载剧本 Markdown</a>
+    </div>
+  </div>
+</section>
+
+<section id="assets">
+  <div class="wrap">
+    <h2>ASSETS</h2>
+    <p class="title">资产图</p>
+    <p class="lead" style="margin-top:-18px;margin-bottom:44px">
+      人物、场景、道具三族分离出图，共 12 张。每张只锁一件事，各图互不越权——这是全片形象一致性的基础。
+    </p>
+
+    <div class="group">
+      <div class="gname">场景 · SCENE</div>
+      <div class="grid">
+        <a class="card" href="资产/图01_第七区废墟长街_场景母版.png" target="_blank"><img src="资产/图01_第七区废墟长街_场景母版.png" alt="图01 第七区废墟长街 场景母版" loading="lazy"><span>图01 · 第七区废墟长街 · 场景母版</span></a>
+        <a class="card" href="资产/图02_第七区废墟长街_场景九宫格.png" target="_blank"><img src="资产/图02_第七区废墟长街_场景九宫格.png" alt="图02 第七区废墟长街 场景九宫格" loading="lazy"><span>图02 · 第七区废墟长街 · 九宫格机位</span></a>
+        <a class="card" href="资产/图03_苍穹神罚裂口_场景母版_暴雨态_v2.png" target="_blank"><img src="资产/图03_苍穹神罚裂口_场景母版_暴雨态_v2.png" alt="图03 苍穹神罚裂口 暴雨态" loading="lazy"><span>图03 · 苍穹神罚裂口 · 暴雨态</span></a>
+        <a class="card" href="资产/图04_苍穹神罚裂口_场景九宫格_暴雨态.png" target="_blank"><img src="资产/图04_苍穹神罚裂口_场景九宫格_暴雨态.png" alt="图04 苍穹神罚裂口 九宫格" loading="lazy"><span>图04 · 苍穹神罚裂口 · 九宫格</span></a>
+        <a class="card" href="资产/图11_苍穹神罚裂口_场景母版_神陨火海态.png" target="_blank"><img src="资产/图11_苍穹神罚裂口_场景母版_神陨火海态.png" alt="图11 苍穹神罚裂口 神陨火海态" loading="lazy"><span>图11 · 苍穹神罚裂口 · 神陨火海态</span></a>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="gname">人物 · CHARACTER</div>
+      <div class="grid">
+        <a class="card" href="资产/图06_陆渊常态_角色四格板.png" target="_blank"><img src="资产/图06_陆渊常态_角色四格板.png" alt="图06 陆渊 常态" loading="lazy"><span>图06 · 陆渊 · 常态角色板</span></a>
+        <a class="card" href="资产/图07_陆渊过载态_角色四格板.png" target="_blank"><img src="资产/图07_陆渊过载态_角色四格板.png" alt="图07 陆渊 过载态" loading="lazy"><span>图07 · 陆渊 · 过载态角色板</span></a>
+        <a class="card" href="资产/图08_米迦勒VII_角色四格板.png" target="_blank"><img src="资产/图08_米迦勒VII_角色四格板.png" alt="图08 米迦勒-VII" loading="lazy"><span>图08 · 米迦勒-VII · 角色板</span></a>
+        <a class="card" href="资产/GRP-01_高空天使军团_群像参考图.png" target="_blank"><img src="资产/GRP-01_高空天使军团_群像参考图.png" alt="GRP-01 高空天使军团" loading="lazy"><span>GRP-01 · 高空天使军团 · 群像</span></a>
+      </div>
+    </div>
+
+    <div class="group">
+      <div class="gname">道具 · PROP</div>
+      <div class="grid">
+        <a class="card" href="资产/图09_黑金雕花重剑_道具四格图_v2.png" target="_blank"><img src="资产/图09_黑金雕花重剑_道具四格图_v2.png" alt="图09 黑金雕花重剑" loading="lazy"><span>图09 · 黑金雕花重剑 · 道具板</span></a>
+        <a class="card" href="资产/图10_染血天使断羽_道具四格图_v2.png" target="_blank"><img src="资产/图10_染血天使断羽_道具四格图_v2.png" alt="图10 染血天使断羽" loading="lazy"><span>图10 · 染血天使断羽 · 道具板</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">《弑神黎明》Dawn of Godslayer · 全部创作由本人独立完成</div>
+</footer>
+
+<script>
+fetch('剧本.md').then(function(r){return r.text()}).then(function(t){
+  document.getElementById('scriptBody').textContent = t;
+}).catch(function(){
+  document.getElementById('scriptBody').textContent = '（剧本正文加载失败，请使用下方下载按钮）';
+});
+</script>
+</body>
+</html>
